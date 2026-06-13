@@ -1,0 +1,63 @@
+;; pi-agent.sb - Seatbelt profile for isolating Pi Coding Agent
+(version 1)
+(deny default)
+
+;; 1. Allow essential process spawning, multi-threading, and TTY/ioctl control
+(allow process-exec*)
+(allow process-fork)
+(allow sysctl-read)
+(allow iokit-open)                 ;; Needed for some terminal/hardware interactions
+(allow file-ioctl)                 ;; REQUIRED for setRawMode / terminal control
+
+;; 2. Allow system metadata lookups (checking if files exist, stat, readdir)
+(allow file-read-metadata)
+
+;; 3. Allow read-only access to system binaries, libraries, and Node runtimes
+(allow file-read-data
+    (literal "/")
+    (literal "/var")
+    (literal "/etc")
+    (literal "/tmp")
+    (literal "/private")
+    (subpath "/usr")
+    (subpath "/bin")
+    (subpath "/sbin")
+    (subpath "/System")
+    (subpath "/Library")
+    (subpath "/opt")                     ;; Necessary for Homebrew Node/ripgrep/fd etc
+    (subpath "/private/var")
+    (subpath "/private/etc")
+    (subpath "/dev")
+)
+
+;; 4. Allow full read/write access to temp dirs, workspace, and the Pi config directory
+(allow file-write*
+    (subpath "/private/tmp")
+    (subpath "/tmp")
+    (subpath "/private/var/folders")
+    (literal "/dev/null")
+    (literal "/dev/tty")           ;; Ensure write to current terminal device is allowed
+    (subpath "/Users/hkothand/.pi") ;; REQUIRED to create settings.json.lock
+    (subpath (param "WORKSPACE"))
+)
+
+;; 5. Allow full read access to your project workspace
+(allow file-read-data
+    (subpath (param "WORKSPACE"))
+)
+
+;; Allow read access to your global Bun installations
+(allow file-read-data
+    (subpath "/Users/hkothand/.bun")
+)
+
+;; REQUIRED to create settings.json.lock
+(allow file-read* file-write*
+    (subpath "/Users/hkothand/.pi")
+    (subpath (param "WORKSPACE"))
+)
+
+;; 6. Network configuration (Choose ONE option below)
+;; Option A: Allow external connections so the agent can talk to LLM APIs (Anthropic/OpenAI)
+(allow network-outbound)
+
