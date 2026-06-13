@@ -1,0 +1,9 @@
+{
+  "defaultProvider": "llama-swap",
+  "defaultModel": "Nex-N2-mini",
+  "lastChangelogVersion": "0.79.2",
+  "enabledModels": [],
+  "packages": [
+    "npm:@danielmeneses/pi-llama-swap"
+  ]
+}
