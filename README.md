@@ -21,4 +21,4 @@ source ~/.bashrc
 pi-safe -p "List all .md files in current directory in 5seconds"
 ```
 
-Put the settings.json in the ~/.pi/agent/ directory
+Put the settings.json in the ~/.pi/agent/ directory, if you use llama-swap as a router for LLMs
