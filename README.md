@@ -20,3 +20,5 @@ source ~/.bashrc
 # execute with:
 pi-safe -p "List all .md files in current directory in 5seconds"
 ```
+
+Put the settings.json in the ~/.pi/agent/ directory
