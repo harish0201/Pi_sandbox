@@ -58,6 +58,6 @@
 )
 
 ;; 6. Network configuration (Choose ONE option below)
-;; Option A: Allow external connections so the agent can talk to LLM APIs (Anthropic/OpenAI)
+;; Allow external connections so the agent can talk to LLM APIs (Anthropic/OpenAI/Local-LLMs)
 (allow network-outbound)
 
