@@ -57,7 +57,7 @@
     (subpath (param "WORKSPACE"))
 )
 
-;; 6. Network configuration (Choose ONE option below)
+;; 6. Network configuration
 ;; Allow external connections so the agent can talk to LLM APIs (Anthropic/OpenAI/Local-LLMs)
 (allow network-outbound)
 
